@@ -16,7 +16,7 @@ namespace ConsoleAusgaben
              * 
              *       Mein Motto:
              */
-            Console.WriteLine("Name: Nicolas Waldner /n"
+            Console.WriteLine("Name: Nicolas Waldner /n/t"
         }
     }
 }
