@@ -20,7 +20,7 @@ namespace ConsoleAusgaben
             Console.ForegroundColor = ConsoleColor.DarkGreen;
 
             Console.WriteLine("Name: Nicolas Waldner");
-            Console.WriteLine("Wohnort: Bregenz, Egg");
+            Console.WriteLine("Wohnort: Egg");
             Console.WriteLine("\n\t Mein Motto: let it happen");
         }
     }
