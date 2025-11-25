@@ -16,7 +16,12 @@ namespace ConsoleAusgaben
              * 
              *       Mein Motto:
              */
-            Console.WriteLine("Name: Nicolas Waldner /n/t"
+
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+
+            Console.WriteLine("Name: Nicolas Waldner");
+            Console.WriteLine("Wohnort: Egg");
+            Console.WriteLine("\n\t Mein Motto: let it happen");
         }
     }
 }
