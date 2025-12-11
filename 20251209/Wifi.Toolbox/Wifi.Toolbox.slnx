@@ -1,4 +1,4 @@
 <Solution>
-  <Project Path="Wifi.Toolbox.TestApplication/Wifi.Toolbox.TestApplication.csproj" />
-  <Project Path="Wifi.Toolbox.Tools/Wifi.Toolbox.Tools.csproj" />
+  <Project Path="Wifi.Toolbox.TestApplication/Wifi.Toolbox.TestApplication.csproj" Id="caa06907-b88c-4947-9b33-eb330642255d" />
+  <Project Path="Wifi.Toolbox.Tools/Wifi.Toolbox.Tools.csproj" Id="baf1c118-ce35-4b54-8700-27a61fee17bb" />
 </Solution>
