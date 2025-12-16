@@ -10,10 +10,6 @@ namespace TeilnehmerVerwaltung_v3
     {
         public string Name;
         public DateTime Geburtsdatum;
-
-        public string Wohnort;
-        public int Plz;
-        public string Strasse;
-        public string HausNr;
+        public Adresse Wohnadresse;
     }
 }

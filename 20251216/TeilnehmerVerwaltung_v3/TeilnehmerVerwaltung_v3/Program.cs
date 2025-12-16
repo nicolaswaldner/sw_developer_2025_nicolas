@@ -42,6 +42,32 @@ namespace TeilnehmerVerwaltung_v3
             //3. Ausgabe der Daten
             Console.WriteLine("\nFolgende Daten wurden erfasst:\n");
             DisplayTeilnehmerData(einTeilnehmer);
+
+            //4. Daten persistieren (File)
+            string filename = CreateFilename(einTeilnehmer);
+            WriteFile(filename, einTeilnehmer);
+
+        }
+
+        private static void WriteFile(string filename, Teilnehmer tn)
+        {
+            using (StreamWriter sw = new StreamWriter(filename, false))
+            {
+                sw.Write(tn.Name + ";");
+                sw.Write(tn.Geburtsdatum.ToShortDateString() + ";");
+                sw.Write(tn.Wohnadresse.Strasse + ";");
+                sw.Write(tn.Wohnadresse.HausNr + ";");
+                sw.Write(tn.Wohnadresse.Plz + ";");
+                sw.WriteLine(tn.Wohnadresse.Wohnort + ";");
+            }
+        }
+
+        private static string CreateFilename(Teilnehmer einTeilnehmer)
+        {
+            //martin_müller_1980.txt
+            string filename = einTeilnehmer.Name + "_" + einTeilnehmer.Geburtsdatum.Year + ".csv";
+
+            return filename.Replace(' ', '_');
         }
 
         private static Teilnehmer GetTeilnehmerData()
