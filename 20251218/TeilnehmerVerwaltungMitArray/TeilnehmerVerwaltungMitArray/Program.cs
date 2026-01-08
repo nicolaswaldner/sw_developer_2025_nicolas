@@ -33,14 +33,20 @@ namespace TeilnehmerVerwaltungMitArray
             Console.WriteLine("\t\tEnde .................... Q"); //ToDo
 
             //ToDo: Extract this section into a new method
+            ReadValidSelection(out valid, out selection);
+        }
+
+        private static void ReadValidSelection(out bool valid, out string selection)
+        {
+
             do
             {
                 Console.Write("Bitte wählen: ");
                 selection = Console.ReadLine();
 
-                if (string.IsNullOrEmpty(selection) || 
+                if (string.IsNullOrEmpty(selection) ||
                     selection.Length > 1 ||
-                    "AB".IndexOf(selection.ToUpper()) < 0)
+                    "ABQ".IndexOf(selection.ToUpper()) < 0)
                 {
                     valid = false;
                 }
@@ -50,15 +56,19 @@ namespace TeilnehmerVerwaltungMitArray
                 }
             }
             while (!valid);
-     
-            if(selection.ToUpper() == "A")
+
+            if (selection.ToUpper() == "A")
             {
                 TeilnehmerErfassen();
             }
-            else if(selection.ToUpper() == "B")
+            else if (selection.ToUpper() == "B")
             {
                 Teilnehmer[] teilnehmerListe = ReadTeilnehmerFromFile("meineTeilnehmerListe.csv");
                 DisplayTeilnehmerData(teilnehmerListe);
+            }
+            else if (selection.ToUpper() == "Q")
+            {
+                return;
             }
         }
 
