@@ -4,15 +4,21 @@
     {
         static void Main(string[] args)
         {
-            Car car1 = new Car("VW Polo");
-            Car car2 = new Car("BadMobil V12", 350, ConsoleColor.DarkBlue);
+            Vehicle[] meinFuhrpark = new Vehicle[]
+            {
+                new Vehicle("VW Polo"),
+                new Vehicle("Opel Astra 1.3i"),
+                new Vehicle("Badmobil V12 Night Edition", 350, ConsoleColor.Green),
+                new Car("Tesla", 200, ConsoleColor.Magenta),
+                new Scooter()
+            };
 
-            car1.Show();
-            car2.Show();
 
-            car1.SpeedUp(100);
-            car1.Show();
-
+            //Fuhrpark darstellen
+            foreach (var vehicle in meinFuhrpark)
+            {
+                vehicle.Show();
+            }
         }
     }
 }
