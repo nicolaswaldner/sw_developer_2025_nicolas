@@ -33,7 +33,6 @@ namespace Fuhrpark_v3
         //override, dass zustandsinfos aus car im show ausgelesen werden können
         public override void Show()
         {
-            base.Show();
             Console.WriteLine($"  => Sitzplätze: {_seatCount}");
         }
 
