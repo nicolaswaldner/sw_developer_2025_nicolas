@@ -5,7 +5,7 @@ namespace Fuhrpark_v3
     {
         static void Main(string[] args)
         {
-            var myVehicleList = new Vehicle[]
+            var myVehicleList = new IVehicle[]
             {
                 new Car("Fiat e500 City", 165, ConsoleColor.Gray),
                 new Scooter(),
@@ -16,7 +16,7 @@ namespace Fuhrpark_v3
             ShowVehicles(myVehicleList);
         }
 
-        private static void ShowVehicles(Vehicle[] myVehicleList)
+        private static void ShowVehicles(IVehicle[] myVehicleList)
         {
             foreach (var vehicle in myVehicleList)
             {
