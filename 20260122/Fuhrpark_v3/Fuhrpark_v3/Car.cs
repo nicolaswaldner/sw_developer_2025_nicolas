@@ -19,13 +19,15 @@ namespace Fuhrpark_v3
 
         //Konstruktor
         public Car(string description)
+            : this (description, 180, ConsoleColor.White, 5)
         {
-            _maxSpeed = 180;
-            _currentSpeed = 0;
-            _description = description;
-            _color = ConsoleColor.White;
-            _seatCount = 5;
-            _radio = new Radio();
+
+        }
+
+        public Car(string description, int maxSpeed, ConsoleColor color)
+            : this(description, maxSpeed, color, 5)
+        {
+
         }
 
         public Car(string description, int maxSpeed, ConsoleColor color, int seatCount)
@@ -61,6 +63,7 @@ namespace Fuhrpark_v3
             Console.ForegroundColor = _color;
 
             Console.WriteLine($"{_description} [{_currentSpeed}/{_maxSpeed} km/h]");
+            Console.WriteLine($"\t -> Seatcount: {SeatCount}");
 
             Console.ForegroundColor = oldcolor;
         }

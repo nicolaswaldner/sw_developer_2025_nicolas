@@ -26,7 +26,7 @@ namespace Fuhrpark_v3
 			get { return _downforceDevice; }
 		}
 
-        public override void Show()
+        public void Show()
         {
             Console.WriteLine($"RacingCar aerodynamic property: {_downforceDevice}");
             base.Show();

@@ -6,32 +6,32 @@ using System.Threading.Tasks;
 
 namespace Fuhrpark_v3
 {
-    internal class Lkw : Vehicle
+    internal class Lkw : IVehicle
     {
-        public override int MaxSpeed => throw new NotImplementedException();
+        public int MaxSpeed => throw new NotImplementedException();
 
-        public override int CurrentSpeed => throw new NotImplementedException();
+        public int CurrentSpeed => throw new NotImplementedException();
 
-        public override string Description => throw new NotImplementedException();
+        public string Description => throw new NotImplementedException();
 
-        public override ConsoleColor Color => throw new NotImplementedException();
+        public ConsoleColor Color => throw new NotImplementedException();
 
-        public override void ChangeRadioPower(bool isOn)
+        public void ChangeRadioPower(bool isOn)
         {
             throw new NotImplementedException();
         }
 
-        public override void MakeSound()
+        public void MakeSound()
         {
             throw new NotImplementedException();
         }
 
-        public override void Show()
+        public void Show()
         {
             throw new NotImplementedException();
         }
 
-        public override void SpeedUp(int delta)
+        public void SpeedUp(int delta)
         {
             throw new NotImplementedException();
         }
