@@ -35,6 +35,8 @@
             erg = Filter(meineZahlen, x => x < 22);
             erg = Filter(meineZahlen, x => x % 2 != 0);
 
+            //LINQ
+            var result = meineZahlen.Select(x => x.ToString());
 
         }
 
