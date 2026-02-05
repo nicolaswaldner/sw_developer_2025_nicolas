@@ -1,4 +1,6 @@
 <Solution>
   <Project Path="Wifi.PlaylistEditor.BaseTypes.Test/Wifi.PlaylistEditor.BaseTypes.Test.csproj" />
   <Project Path="Wifi.PlaylistEditor.BaseTypes/Wifi.PlaylistEditor.BaseTypes.csproj" />
+  <Project Path="Wifi.PlaylistEditor.ItemTypes/Wifi.PlaylistEditor.ItemTypes.csproj" Id="129092d1-107f-405d-a44f-2475a56bedc8" />
+  <Project Path="Wifi.PlaylistEditor.RepositoryTypes/Wifi.PlaylistEditor.RepositoryTypes.csproj" Id="bc565f56-a256-43b8-8063-9671ce92ecd1" />
 </Solution>
