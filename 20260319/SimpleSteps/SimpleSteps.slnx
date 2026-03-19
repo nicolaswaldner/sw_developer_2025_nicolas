@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="SimpleSteps.Business/SimpleSteps.Business.csproj" />
+  <Project Path="SimpleSteps.Data/SimpleSteps.Data.csproj" />
+  <Project Path="SimpleSteps.GuiWpf/SimpleSteps.GuiWpf.csproj" />
+  <Project Path="SimpleSteps.Model/SimpleSteps.Model.csproj" />
+</Solution>
