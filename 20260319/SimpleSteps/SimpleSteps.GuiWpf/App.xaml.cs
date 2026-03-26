@@ -49,12 +49,23 @@ namespace SimpleSteps.GuiWpf
                     //    context.Configuration.GetSection("AppSettings"));
 
                     services.AddScoped<AppUserService>();
+                    services.AddScoped<LocationService>();
+                    services.AddScoped<RoomService>();
+
+                    services.AddTransient<MainWindow>();
                     //services.AddTransient<MainWindowViewModel>();
-                    //services.AddTransient<MainWindow>();
+
 
                 })
                 .Build();
 
+            Log.Information("Services initialized");
+
+            var mainWindow = AppHost.Services.GetRequiredService<MainWindow>();
+            mainWindow.WindowStyle = WindowStyle.SingleBorderWindow;
+            mainWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            mainWindow.Show();
 
 
         }
