@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/Application/" />
+  <Folder Name="/Clients/" />
+  <Folder Name="/Common/" />
+  <Folder Name="/Core/">
+    <Project Path="SD.Core/SD.Core.csproj" />
+  </Folder>
+  <Folder Name="/Docs/" />
+  <Folder Name="/Persistence/" />
+</Solution>
