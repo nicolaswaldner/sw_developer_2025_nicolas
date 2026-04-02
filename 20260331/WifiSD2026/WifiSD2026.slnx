@@ -6,5 +6,7 @@
     <Project Path="SD.Core/SD.Core.csproj" />
   </Folder>
   <Folder Name="/Docs/" />
-  <Folder Name="/Persistence/" />
+  <Folder Name="/Persistence/">
+    <Project Path="SD.Persistence/SD.Persistence.csproj" Id="632aece5-cdc9-4586-bbf2-179879663087" />
+  </Folder>
 </Solution>

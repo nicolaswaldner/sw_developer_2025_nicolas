@@ -1,22 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace SD.Core.Entities
 {
-    public class Movie
+    [Table(name: nameof(MovieBase) + "s")]
+    public class Movie : MovieBase, IEntity
     {
-        public Guid Id { get; set; }
-
-        public string Title { get; set; }
-
-        public int GenreId { get; set; }
-
-        public string? MediumTypeCode { get; set; }
-
-        public decimal Price { get; set; }
-
-        public DateTime ReleaseDate { get; set; }
-
+        //Navigation Properties zu Genre und MediumType
+        public virtual Genre Genre { get; set; }
+        public virtual MediumType MediumType { get; set; }
     }
 }
