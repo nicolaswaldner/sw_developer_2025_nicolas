@@ -12,7 +12,7 @@ namespace SD.Core.Entities
     {
         public Genre()
         {
-            this.Movies = new HashSet<MovieBase>();
+            this.Movies = new HashSet<Movie>();
         }
 
         public virtual int Id { get; set; }
@@ -24,6 +24,6 @@ namespace SD.Core.Entities
 
         /* Navigation Property zur Movie-Entität */
         [JsonIgnore]
-        public virtual ICollection<MovieBase> Movies { get; }
+        public virtual ICollection<Movie> Movies { get; }
     }
 }
