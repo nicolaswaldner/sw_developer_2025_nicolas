@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 namespace SD.Core.Entities
 {
     [Table(name: nameof(MediumType) + "s")]
-    public class MediumType :IEntity
+    public class MediumType : IEntity
     {
         public MediumType()
         {
