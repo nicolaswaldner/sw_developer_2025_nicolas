@@ -10,7 +10,7 @@ namespace SD.Core.Repositories
     {
         //Add Methoden
         void Add<T>(T entity, bool saveImmediately = false)
-            where T : class, IEntity;
+            where T : class, IEntity; //Typsicher, dass nur Entity Klassen in Repository kommen
 
         Task AddAsync<T>(T entity, bool saveImmediately = false, CancellationToken cancellationToken = default)
             where T : class, IEntity;
