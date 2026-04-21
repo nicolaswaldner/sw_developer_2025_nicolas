@@ -49,8 +49,8 @@ namespace SD.Persistence.Repositories.Base
             where T : class, IEntity
         {
             if (entity == null)
-            { 
-                return; 
+            {
+                return;
             }
 
             this.movieDbContext.Add(entity);
@@ -68,7 +68,7 @@ namespace SD.Persistence.Repositories.Base
         {
             //hier wird nur Abfrage Retour gegeben 
             var query = this.movieDbContext.Set<T>();
-            
+
             if (whereFilter != null)
             {
                 return query.Where(whereFilter);
@@ -103,7 +103,7 @@ namespace SD.Persistence.Repositories.Base
         }
 
         public async Task<T> UpdateAsync<T>(T entity, object key, bool saveImmediately = default, CancellationToken cancellationToken = default)
-            where T: class, IEntity
+            where T : class, IEntity
         {
             if (entity == null)
             {
@@ -116,7 +116,7 @@ namespace SD.Persistence.Repositories.Base
             {
                 this.movieDbContext.Entry(toUpdate).CurrentValues.SetValues(entity);
             }
-            
+
             if (saveImmediately)
             {
                 await this.movieDbContext.SaveChangesAsync(cancellationToken);
@@ -149,10 +149,10 @@ namespace SD.Persistence.Repositories.Base
             {
                 return;
             }
-             
+
             this.movieDbContext.Remove<T>(entity);
 
-            if(saveImmediately)
+            if (saveImmediately)
             {
                 await this.movieDbContext.SaveChangesAsync(cancellationToken);
             }
@@ -181,7 +181,7 @@ namespace SD.Persistence.Repositories.Base
         public async Task RemoveByKeyAsync<T>(object key, bool saveImmediately = default, CancellationToken cancellationToken = default)
             where T : class, IEntity
         {
-            if(key == null)
+            if (key == null)
             {
                 return;
             }
@@ -199,5 +199,15 @@ namespace SD.Persistence.Repositories.Base
         }
         #endregion
 
+        public void SaveChanges()
+        {
+            this.movieDbContext.SaveChanges();
+        }
+
+        public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            await this.movieDbContext.SaveChangesAsync(cancellationToken);
+        }
     }
 }
+
