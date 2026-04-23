@@ -2,7 +2,9 @@
   <Folder Name="/Application/">
     <Project Path="SD.Application/SD.Application.csproj" Id="6fa3ada9-5d6a-4ba0-92ba-5c7fa646d8ee" />
   </Folder>
-  <Folder Name="/Clients/" />
+  <Folder Name="/Clients/">
+    <Project Path="SD.WS/SD.WS.csproj" Id="b1ede986-d744-4d31-9ed5-7703636ee5fe" />
+  </Folder>
   <Folder Name="/Common/" />
   <Folder Name="/Core/">
     <Project Path="SD.Core/SD.Core.csproj" />
