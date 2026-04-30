@@ -18,10 +18,10 @@ namespace GuiEntwurf
     {
         public MainWindow()
         {
-            InitializeComponent();
+            //InitializeComponent();
         }
 
-        private void btnDemo_Click(object sender, RoutedEventArgs e) //wichtig eindeutige Namen der Elememente //sender ist wer das event ausgelöst hat, in diesem Fall der Button
+        private void btnDemo_Click(object sender, RoutedEventArgs e) //wichtig: eindeutige Namen der Elemente //sender ist wer das event ausgelöst hat, in diesem Fall der Button
         {
 
         }

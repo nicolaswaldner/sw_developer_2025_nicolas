@@ -8,12 +8,12 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <StackPanel>
-            <Button Content="Button" x:Name="btnDemo" Height="50" Width="100" Click="btnDemo_Click"/>
-            <ComboBox x:Name="cbxDemo" Width="120" Background="#FFE6E6E6">
+            <Button Content="Button" x:Name="btnDemo"  Height="50" Width="100" Click="btnDemo_Click"/>
+            <ComboBox x:Name="cbxDemo" Width="120" BorderBrush="#FFACACAC">
                 <ComboBoxItem Content="Auswahl 1" IsSelected="True"/>
                 <ComboBoxItem Content="Auswahl 2"/>
             </ComboBox>
-            <ListBox x:Name="lstDemo" Width="120" Height="100" SelectionMode="Extended">
+            <ListBox x:Name="lstDemo" Width="120" SelectionMode="Extended" >
                 <ListBoxItem Content="Wert 1"/>
                 <ListBoxItem Content="Wert 2"/>
                 <ListBoxItem Content="Wert 3"/>
@@ -28,14 +28,12 @@
                 <CheckBox Content="Check 1" IsChecked="True" IsThreeState="True"/>
                 <CheckBox Content="Check 2"/>
                 <CheckBox Content="Check 3"/>
-            </StackPanel> 
-
-            <TextBox TextWrapping="Wrap" Text="TextBox" Width="120"/>
-            <PasswordBox Password="Password" Width="120"/>
+            </StackPanel>
+            <Image Source="/Image/R.png" Width="50" />
+            <Label Content="Beschriftung" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold" />
+            <TextBox x:Name="txtDemo" Width="200" Text="Text eingeben"/>
 
         </StackPanel>
-        <Image Source="/exit-button-icon-215904-512.png" Margin="362,280,362,98" Width="50"/>
-        <Label Content="Beschriftung" HorizontalAlignment="Center" FontSize="24" FontWeight="Black" Margin="0,228,0,-228"/>
 
     </Grid>
 </Window>

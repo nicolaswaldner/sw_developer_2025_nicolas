@@ -22,8 +22,4 @@
     </Content>
   </ItemGroup>
 
-  <ItemGroup>
-    <Resource Include="Image\exit-button-icon-215904-512.png" />
-  </ItemGroup>
-
 </Project>
