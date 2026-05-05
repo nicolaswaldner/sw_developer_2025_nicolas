@@ -6,7 +6,51 @@
         xmlns:local="clr-namespace:GuiEntwurf"
         mc:Ignorable="d"
         Title="fDataBinding" Height="450" Width="800" Closing="Window_Closing">
-    <Grid>
+
+    <Window.Resources>
+        <DataTemplate x:Key="templatePerson">
+            <Border BorderBrush="#FF8EC58E" BorderThickness="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="25*"/>
+                        <ColumnDefinition Width="75*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Grid.Column="0" Source="/Image/D.jpg" Width="100" Height="100"/>
+                    <StackPanel Margin="5" HorizontalAlignment="Stretch" Grid.Column="1">
+                        <TextBlock Foreground="Red" FontSize="20" Text="{Binding DisplayName}" TextAlignment="Left" />
+                        <TextBlock Foreground="Black" FontSize="12" Text="{Binding Email}" TextAlignment="Left" />
+                        <TextBlock Foreground="Black" FontSize="12" Text="{Binding Phone}" TextAlignment="Left" />
+                    </StackPanel>
+                </Grid>
+                
+                
+            </Border>
+        </DataTemplate>
         
+        
+    </Window.Resources>
+    
+    
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25*"/>
+            <ColumnDefinition Width="75*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            <Button x:Name="btnLoadPersons" Content="Personenliste laden" Click="btnLoadPersons_Click" />
+            <!--<ListBox x:Name="lstPersons" DisplayMemberPath="DisplayName" ItemsSource="{Binding}"/>-->
+            <ListBox x:Name="lstPersons" ItemsSource="{Binding}" ItemTemplate="{DynamicResource templatePerson}"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Margin="10"> 
+            <TextBox x:Name="Id" Text="{Binding Id}" />
+            <TextBox x:Name="Lastname" Text="{Binding Lastname}" />
+            <TextBox x:Name="Firstname" Text="{Binding Firstname}" />
+            <TextBox x:Name="Email" Text="{Binding Email}" />
+            <TextBox x:Name="Phone" Text="{Binding Phone}" />
+            <Button x:Name="btnLoadPerson" Content="Personendaten laden" Click="btnLoadPerson_Click" />
+            <Button x:Name="btnSavePerson" Content="Personendaten speichern" Click="btnSavePerson_Click" />
+        </StackPanel>
     </Grid>
 </Window>

@@ -9,28 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="exit-button-icon-215904-512.png" />
     <None Remove="Image\D.jpg" />
-    <None Remove="Image\R.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Remove="MainWindow.xaml" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Image\D.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Image\R.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Include="MainWindow.xaml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Page>
   </ItemGroup>
 
 </Project>
