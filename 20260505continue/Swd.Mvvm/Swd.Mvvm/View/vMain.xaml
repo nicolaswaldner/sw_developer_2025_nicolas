@@ -50,6 +50,8 @@
             <TextBox x:Name="Email" Text="{Binding SelectedPerson.Email}" />
             <TextBox x:Name="Phone" Text="{Binding SelectedPerson.Phone}" />
             <Button x:Name="btnSavePerson" Content="Personendaten speichern" Click="btnSavePerson_Click" />
+            <Button x:Name="btnSavePersonCommand" Content="Personendaten speichern (Command)" Command="{Binding SaveCommand}" />
+            <Button x:Name="btnDeleteCommand" Content="Personendaten löschen (Command)" Command="{Binding DeleteCommand}" />
         </StackPanel>
         <StatusBar Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
             <Label Content="Letzte Aktualisierung:" />

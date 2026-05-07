@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using SimpleSteps.Business.Services;
 using SimpleSteps.Data;
+using SimpleSteps.GuiWpf.Views;
 using System.Configuration;
 using System.Data;
 using System.Windows;
@@ -52,8 +53,11 @@ namespace SimpleSteps.GuiWpf
                     services.AddScoped<LocationService>();
                     services.AddScoped<RoomService>();
 
-                    services.AddTransient<MainWindow>();
+                    //services.AddTransient<MainWindow>();
+                    services.AddTransient<vSimpleSteps>();
+
                     //services.AddTransient<MainWindowViewModel>();
+                    
 
 
                 })
@@ -61,7 +65,7 @@ namespace SimpleSteps.GuiWpf
 
             Log.Information("Services initialized");
 
-            var mainWindow = AppHost.Services.GetRequiredService<MainWindow>();
+            var mainWindow = AppHost.Services.GetRequiredService<vSimpleSteps>();
             mainWindow.WindowStyle = WindowStyle.SingleBorderWindow;
             mainWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
