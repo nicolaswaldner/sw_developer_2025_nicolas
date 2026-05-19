@@ -14,62 +14,181 @@
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0" x:Name="menMain">
-            <MenuItem Header="Datei" >
-
-            </MenuItem>
-
-            <MenuItem Header="Bearbeiten" >
-
-            </MenuItem>
-
-            <MenuItem Header="Hilfe" >
-
-            </MenuItem>
+            <MenuItem Header="Datei" />
+            <MenuItem Header="Bearbeiten"/>
+            <MenuItem Header="Hilfe"/>
         </Menu>
 
+
         <TabControl Grid.Row="1" x:Name="tabMain">
-            <TabItem Header="Dashboard" >
-                <StackPanel>
-                    <Label x:Name="lblRaumklima" Content="Raumklima" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                    <DataGrid x:Name="dgRoomData" >
+            <TabItem Header="Dashboard" x:Name="taiDashboard">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="50*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Content="Raumklima"  />
+                    <Label Grid.Row="0" Grid.Column="1" Content="Trinkmenge"  />
+                    <Label Grid.Row="1" Grid.Column="0" Content="Chart Raumklima"  />
+                    <Label Grid.Row="1" Grid.Column="1" Content="Chart Trinkmenge"  />
+                </Grid>
+            </TabItem>
+
+            <!-- Register Messdaten -->
+            <TabItem Header="Daten" x:Name="taiData">
+                <DockPanel LastChildFill="True">
+                    <ToolBar DockPanel.Dock="Top">
+                        <Button Content="Aktualisieren" Command="{Binding UpdateCommand}"/>
+                    </ToolBar>
+                    <!--<DataGrid x:Name="dgMeasuredData" ItemsSource="{Binding MeasuredData}" />-->
+                    <DataGrid x:Name="dgMeasuredData" ItemsSource="{Binding MeasuredData}"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              CanUserSortColumns="True"
+                              CanUserResizeColumns="true"
+                              >
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Datum" Binding="{Binding Property1}" />
-                            <DataGridTextColumn Header="Raum" Binding="{Binding Property2}" />
-                            <DataGridTextColumn Header="Raumtemperatur" Binding="{Binding Property3}" />
-                            <DataGridTextColumn Header="Co2" Binding="{Binding Property4}" />
+                            <DataGridTextColumn Header="ID"
+                                                    Binding="{Binding Id}"
+                                                    Width="70"
+                                                    Visibility="Collapsed"/>
+                            <DataGridTextColumn Header="Zeipunkt"
+                                                    Binding="{Binding MeasuredDateTime, StringFormat={}{0:dd.MM.yyyy HH:mmMss}}"
+                                                    Width="100"
+                                                    />
+                            <!--<DataGridTextColumn Header="Messwert"
+                                                    Binding="{Binding MeasuredValue, StringFormat={}{0:N2}}"
+                                                    Width="100"
+                                                    />-->
+                            <DataGridTextColumn Header="Messwert"
+                                                    Binding="{Binding MeasuredValue, StringFormat={}{0:N2}}"
+                                                    Width="100"
+                                                    >
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextAlignment" Value="Right" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="Einheit"
+                                                    Binding="{Binding Unit}"
+                                                    Width="100"
+                                                    />
+
                         </DataGrid.Columns>
+
                     </DataGrid>
+                </DockPanel>
+            </TabItem>
+
+
+            <!-- Register Klienten -->
+            <TabItem Header="Klienten" x:Name="taiPersons">
+                <DockPanel LastChildFill="True">
+
+                    <ToolBar DockPanel.Dock="Top">
+                        <Button Content="Neu" Command="{Binding NewAppUserCommand}" />
+                        <Button Content="Speichern" Command="{Binding UpdateAppUserCommand}"/>
+                        <Button Content="Löschen" Command="{Binding DeleteAppUserCommand}"/>
+                    </ToolBar>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition MaxWidth="150" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                            <TextBox x:Name="txbSearchValue" 
+                                     MinWidth="120"
+                                     MaxWidth="150"
+                                     Text="{Binding SearchValue, UpdateSourceTrigger=PropertyChanged, Delay=500}" />
+                            <!--<Button x:Name="btnSearch" Content="Suche" Command="{Binding SearchAppUserCommand}" />-->
+                        </StackPanel>
+                        <ListBox Grid.Row="1" Grid.Column="0" x:Name="lstAppUsers" 
+                                 ItemsSource="{Binding AppUsers}"
+                                 DisplayMemberPath="Displayname"
+                                 SelectedValuePath="Id"
+                                 SelectedValue="{Binding SelectedAppUser.Id}"
+                                 SelectedItem="{Binding SelectedAppUser}"
+                                 />
+
+
+                        <Label Grid.Row="2" Grid.Column="0" x:Name="lblRecordCount" Content="100" />
+
+                        <Grid Grid.Row="1" Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="35" />
+                                <RowDefinition Height="35" />
+                                <RowDefinition Height="35" />
+                                <RowDefinition Height="35" />
+                                <RowDefinition Height="35" />
+                                <RowDefinition Height="35" />
+                                <RowDefinition Height="35" />
+                                <RowDefinition Height="35" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="25*" />
+                                <ColumnDefinition Width="75*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Row="0" Grid.Column="0" Content="Name" />
+                            <Label Grid.Row="1" Grid.Column="0" Content="Vorname" />
+                            <Label Grid.Row="2" Grid.Column="0" Content="Geburtsdatum" />
+                            <Label Grid.Row="3" Grid.Column="0" Content="Ist aktiv" />
+                            <Label Grid.Row="4" Grid.Column="0" Content="E-Mail" />
+                            <Label Grid.Row="5" Grid.Column="0" Content="Mobiltelefon" />
+                            <Label Grid.Row="6" Grid.Column="0" Content="Geschlecht" />
+                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedAppUser.Lastname}" />
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedAppUser.Name}" />
+                            <!--<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedAppUser.Birthday}" />-->
+                            <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding SelectedAppUser.Birthday}" />
+                            <!--<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SelectedAppUser.IsActive}" />-->
+                            <CheckBox Grid.Row="3" Grid.Column="1" IsChecked="{Binding SelectedAppUser.IsActive}" />
+                            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding SelectedAppUser.Email}" />
+                            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding SelectedAppUser.Mobilephone}" />
+                            <!--<TextBox Grid.Row="6" Grid.Column="1" Text="{Binding SelectedAppUser.Sex}" />-->
+                            <ComboBox Grid.Row="6" Grid.Column="1"
+                                      ItemsSource="{Binding Gender}"
+                                      SelectedItem="{Binding SelectedAppUser.Sex, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                      Width="150" />
+
+                        </Grid>
+
+
+                    </Grid>
+
+
+
+
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Vorhersage" x:Name="taiForecast">
+                <StackPanel>
+
                 </StackPanel>
-
             </TabItem>
-
-            <TabItem Header="Daten">
-
-            </TabItem>
-
-            <TabItem Header="Klienten">
-                
-            </TabItem>
-            
-            <TabItem Header="Vorhersage">
-
-            </TabItem>
-
         </TabControl>
+
 
 
         <StatusBar Grid.Row="2" x:Name="staStatusbar">
             <StackPanel Orientation="Horizontal">
-                <Label Content="Datenstand vom:" />
-                <Label x:Name="lblLastData" Content="{Binding LastData}" />
-                <Label Content="Letzte Aktualisierung:" />
-                <Label x:Name="lblLastForecast" Content="{Binding LastForecast}" />
+                <Label  Content="Datenstand vom: "/>
+                <Label x:Name="lblLastData" Content="{Binding LastData}"/>
+                <Label Content="Letzte Aktualisierung: "/>
+                <Label x:Name="lblLastForecast" Content="{Binding LastForecast}"/>
             </StackPanel>
         </StatusBar>
-
-
-
-
 
     </Grid>
 </Window>

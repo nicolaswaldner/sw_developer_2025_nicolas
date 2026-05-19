@@ -12,6 +12,7 @@ namespace SimpleSteps.Data
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Location> Locations { get; set; }
+        public DbSet<MeasuredData> MeasuredData { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options) //hierdurch wird Konstruktor von DbContext aufgerufen
@@ -26,7 +27,8 @@ namespace SimpleSteps.Data
             modelBuilder.Entity<AppUser>().ToTable("AppUser");
             modelBuilder.Entity<Location>().ToTable("Location");
             modelBuilder.Entity<Room>().ToTable("Room");
-            
+            modelBuilder.Entity<MeasuredData>().ToTable("MeasuredData");
+
         }
 
 

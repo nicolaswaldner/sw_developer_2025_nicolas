@@ -18,11 +18,11 @@ namespace SimpleSteps.GuiWpf.Views
     /// </summary>
     public partial class vSimpleSteps : Window
     {
-        public vSimpleSteps()
+        public vSimpleSteps(vmSimpleSteps viewModel)
         {
             InitializeComponent();
 
-            this.DataContext = new vmSimpleSteps();
+            this.DataContext = viewModel();
         }
     }
 }

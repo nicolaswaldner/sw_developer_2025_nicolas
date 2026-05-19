@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using SimpleSteps.Business.Services;
 using SimpleSteps.Data;
+using SimpleSteps.GuiWpf.ViewModels;
 using SimpleSteps.GuiWpf.Views;
 using System.Configuration;
 using System.Data;
@@ -52,12 +53,15 @@ namespace SimpleSteps.GuiWpf
                     services.AddScoped<AppUserService>();
                     services.AddScoped<LocationService>();
                     services.AddScoped<RoomService>();
+                    services.AddScoped<MeasuredDataService>();
 
                     //services.AddTransient<MainWindow>();
+
+                    services.AddTransient<vmSimpleSteps>();
                     services.AddTransient<vSimpleSteps>();
 
                     //services.AddTransient<MainWindowViewModel>();
-                    
+
 
 
                 })

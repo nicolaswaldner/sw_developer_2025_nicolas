@@ -16,6 +16,7 @@ namespace SimpleSteps.Model
         public string Sex { get; set; }
 
 
+        public string Displayname { get { return string.Format("{0} {1}", Lastname, Name); } }
 
     }
 }
