@@ -33,7 +33,7 @@ namespace SD.Application.Movies
                 Id = Guid.NewGuid(),
                 Title = "n/a",
                 GenreId = 1,
-                MediumTypeCode = "BR"
+                MediumTypeCode = "BD"
             };
 
             await movieRepository.AddAsync(movie, true, cancellationToken); //true, damit die Änderungen sofort in der Datenbank gespeichert werden
