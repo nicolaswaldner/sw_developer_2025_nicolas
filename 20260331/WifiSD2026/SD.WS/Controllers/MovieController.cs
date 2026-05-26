@@ -1,6 +1,7 @@
 ﻿using Mediator;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using Microsoft.Identity.Client;
 using SD.Core.Application.Commands;
 using SD.Core.Application.Queries;
 using SD.Core.Application.Results;
@@ -27,11 +28,23 @@ namespace SD.WS.Controllers
         }
 
         [HttpPost(nameof(MovieDto))]
-        [ProducesResponseType(typeof(MovieDto), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(MovieDto), StatusCodes.Status201Created)] //dass Schnittstellen-beschreibung über Open Api richtig angezeigt wird
         public async Task<MovieDto> CreateMovieDto(CancellationToken cancellationToken)
         {
             var result = await base.Mediator.Send(new CreateMovieDtoCommand(), cancellationToken);
             return base.SetLocationUri<MovieDto>(result, result.Id.ToString());
+        }
+
+        [HttpPut(nameof(MovieDto) + ID_PARAMETER)]
+        public async Task<MovieDto> UpdateMovieDto([FromRoute] Guid Id, [FromBody] MovieDto movieDto, CancellationToken cancellationToken)
+        {
+            return await base.Mediator.Send(new UpdateMovieDtoCommand {  Id = Id, MovieDto = movieDto }, cancellationToken);
+        }
+
+        [HttpDelete(nameof(MovieDto) + ID_PARAMETER)]
+        public async Task DeleteMovieDto([FromRoute] DeleteMovieDtoCommand command, CancellationToken cancellationToken)
+        {
+            await base.Mediator.Send(command, cancellationToken);
         }
     }
 }

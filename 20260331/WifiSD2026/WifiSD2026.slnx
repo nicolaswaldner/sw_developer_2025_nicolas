@@ -5,7 +5,9 @@
   <Folder Name="/Clients/">
     <Project Path="SD.WS/SD.WS.csproj" Id="b1ede986-d744-4d31-9ed5-7703636ee5fe" />
   </Folder>
-  <Folder Name="/Common/" />
+  <Folder Name="/Common/">
+    <Project Path="SD.Common/SD.Common.csproj" Id="d53e9032-165c-4d28-81f7-e36145c72a4b" />
+  </Folder>
   <Folder Name="/Core/">
     <Project Path="SD.Core/SD.Core.csproj" />
   </Folder>

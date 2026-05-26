@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
+using Scalar.AspNetCore;
 using SD.Application.Extensions;
 using SD.Persistence.Extensions;
 using SD.Persistence.Repositories.DBContext;
@@ -49,9 +50,14 @@ namespace SD.WS
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
+                //Swagger
                 app.UseSwagger();
                 app.UseSwaggerUI();
+
+                //Microsoft Scalar
                 app.MapOpenApi();
+
+                app.MapScalarApiReference();
             }
 
             app.UseHttpsRedirection();
