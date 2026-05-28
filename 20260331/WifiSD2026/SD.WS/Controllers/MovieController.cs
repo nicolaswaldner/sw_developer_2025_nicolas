@@ -1,4 +1,5 @@
 ﻿using Mediator;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Identity.Client;
@@ -9,6 +10,7 @@ using SD.Core.Application.Results;
 namespace SD.WS.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("[controller]")]
     public class MovieController : MediatorBaseController
     {
@@ -21,6 +23,7 @@ namespace SD.WS.Controllers
         }
 
 
+        [AllowAnonymous]
         [HttpGet(nameof(MovieDto))]
         public async Task<IEnumerable<MovieDto>> GetMovieDtos([FromQuery] GetMovieDtosQuery query, CancellationToken cancellationToken)
         {

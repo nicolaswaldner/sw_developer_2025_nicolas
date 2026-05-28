@@ -1,8 +1,11 @@
 
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
 using Scalar.AspNetCore;
+using SD.Application.Authentication;
 using SD.Application.Extensions;
+using SD.Common.Services;
 using SD.Persistence.Extensions;
 using SD.Persistence.Repositories.DBContext;
 
@@ -28,6 +31,22 @@ namespace SD.WS
                     Contact = new OpenApiContact { Email = "nicolas@example.com", 
                                                     Url = new Uri("https://example.com"), Name = "Nicolas"}
                 });
+
+                g.AddSecurityDefinition("basic", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "basic",
+                    In = ParameterLocation.Header, // In definiert, an welchem Bereich vom Swagger die Schaltfläche für LogIn ist
+                    Description = "Basic Authentication header using basic scheme"
+                });
+
+                g.AddSecurityRequirement(document => new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecuritySchemeReference("basic", document, null),
+                        new List<string>()
+                    }
+                });
             });
 
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -37,6 +56,15 @@ namespace SD.WS
             //DB Context Registrierung, Verbindung zur Datenbank
             var connectionString = builder.Configuration.GetConnectionString("MovieDbContext");
             builder.Services.AddDbContext<MovieDbContext>(options => options.UseSqlServer(connectionString));
+
+            //Registrierung von UserService zur ServiceCollection
+            builder.Services.AddScoped<IUserService, UserService>();
+
+            //BasicAuthentication Handler registrieren
+            builder.Services.AddAuthentication(nameof(BasicAuthenticationHandler))
+                            .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>(nameof(BasicAuthenticationHandler), null);
+
+            builder.Services.AddAuthorization();
 
             //zuerst untere Schicht
             builder.Services.RegisterRepositories();
@@ -62,6 +90,8 @@ namespace SD.WS
 
             app.UseHttpsRedirection();
 
+            //Uses für Authentication und Authorization aufrufen (diese Reihenfolge wichtig)
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

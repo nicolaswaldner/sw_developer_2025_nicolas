@@ -51,7 +51,6 @@ namespace SD.Application.Authentication
 
                 user = await this.userService.Authenticate(username, password, default);
             }
-
             catch
             {
                 return await Task.FromResult(AuthenticateResult.Fail("Invalid Authorization Header!"));
