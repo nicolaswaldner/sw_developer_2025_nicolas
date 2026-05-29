@@ -148,18 +148,18 @@
                             <Label Grid.Row="4" Grid.Column="0" Content="E-Mail" />
                             <Label Grid.Row="5" Grid.Column="0" Content="Mobiltelefon" />
                             <Label Grid.Row="6" Grid.Column="0" Content="Geschlecht" />
-                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedAppUser.Lastname}" />
-                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedAppUser.Name}" />
+                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedAppUser.Lastname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedAppUser.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                             <!--<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedAppUser.Birthday}" />-->
-                            <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding SelectedAppUser.Birthday}" />
+                            <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding SelectedAppUser.Birthday, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                             <!--<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SelectedAppUser.IsActive}" />-->
-                            <CheckBox Grid.Row="3" Grid.Column="1" IsChecked="{Binding SelectedAppUser.IsActive}" />
-                            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding SelectedAppUser.Email}" />
-                            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding SelectedAppUser.Mobilephone}" />
+                            <CheckBox Grid.Row="3" Grid.Column="1" IsChecked="{Binding SelectedAppUser.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding SelectedAppUser.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding SelectedAppUser.Mobilephone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             <!--<TextBox Grid.Row="6" Grid.Column="1" Text="{Binding SelectedAppUser.Sex}" />-->
                             <ComboBox Grid.Row="6" Grid.Column="1"
                                       ItemsSource="{Binding Gender}"
-                                      SelectedItem="{Binding SelectedAppUser.Sex, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                      SelectedItem="{Binding SelectedAppUser.Sex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       Width="150" />
 
                         </Grid>

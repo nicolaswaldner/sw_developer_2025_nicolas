@@ -4,6 +4,7 @@ using SimpleSteps.Business.Services;
 using SimpleSteps.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -24,10 +25,28 @@ namespace SimpleSteps.GuiWpf.ViewModels
         [ObservableProperty]
         private List<MeasuredData> measuredData;
 
+
         [ObservableProperty]
-        private List<AppUser> appUsers;
+        private ObservableCollection<AppUser> appUsers;
+
+
+
         [ObservableProperty]
         private AppUser selectedAppUser;
+
+
+        //wird automatisch aufgerufen, wenn sich der Wert von SelectedAppUser ändert
+        partial void OnSelectedAppUserChanged(AppUser value)
+        {
+            UpdateAppUserCommand.NotifyCanExecuteChanged();
+            if (value!=null)
+            {
+                value.ErrorsChanged += Value.ErrorsChanged;
+            }
+        }
+
+
+
 
         [ObservableProperty]
         private string searchValue;
@@ -48,9 +67,22 @@ namespace SimpleSteps.GuiWpf.ViewModels
             LastForecast = DateTime.Now;
             WindowTitle = "SimpleSteps - Dashboard";
 
-            MeasuredData = measuredDataService.GetAll();
-            appUsers = appUserService.GetAllUsers();
+            //nicht mehr verwendbar, da im constructor keien asynchrone Methoden ausgeführt werden können
+            //MeasuredData = measuredDataService.GetAll();
+            //appUsers = appUserService.GetAllUsersAsync();
         }
+
+        //so gehts bzgl. async methode in constructor
+        public async Task LoadAsync()
+        {
+            MeasuredData = _measuredDataService.GetAll();
+            //vor umstellung auf observablecollection
+            //appUsers = await _appUserService.GetAllUsersAsync();
+            var userList = await _appUserService.GetAllUsersAsync();
+            AppUsers = new ObservableCollection<AppUser>(userList.OrderBy(o => o.Displayname));
+        }
+
+
 
         //Methoden für die Buttons, für MeasuredData
         [RelayCommand]
@@ -64,35 +96,44 @@ namespace SimpleSteps.GuiWpf.ViewModels
         private void NewAppUser()
         {
             SelectedAppUser = _appUserService.New();
+            SelectedAppUser.Validate();
         }
 
-        [RelayCommand]
-        private void UpdateAppUser()
+        [RelayCommand(CanExecute = nameof(CanUpdate))]
+        private async Task UpdateAppUser()
         {
             _appUserService.Update(SelectedAppUser);
+            var userList = await _appUserService.GetAllUsersAsync();
+            AppUsers = new ObservableCollection<AppUser>(AppUsers.OrderBy(o => o.Displayname));
         }
 
         [RelayCommand]
         private void DeleteAppUser()
         {
             _appUserService.Delete(SelectedAppUser);
+            AppUsers.Remove(SelectedAppUser);
+            selectedAppUser = null;
         }
         [RelayCommand(CanExecute = nameof(CanSearch))]
-        private void SearchAppUser()
+        private async Task SearchAppUser()
         {
             string searchValue = SearchValue;
-
             if (searchValue != null || searchValue != string.Empty)
             {
                 AppUsers.Clear();
-                AppUsers = _appUserService.Search(searchValue);
+                var userList = await _appUserService.SearchAsync(searchValue);
+                AppUsers = new ObservableCollection<AppUser>(userList.OrderBy(x => x.Lastname));
             }
-
         }
 
         private bool CanSearch()
         {
             return !string.IsNullOrWhiteSpace(SearchValue);
+        }
+
+        private bool CanUpdate()
+        {
+            return SelectedAppUser != null && !SelectedAppUser.HasErrors;
         }
 
     }

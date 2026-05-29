@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using SimpleSteps.Business;
 using SimpleSteps.Business.Services;
 using SimpleSteps.Data;
 using SimpleSteps.GuiWpf.ViewModels;
@@ -54,6 +55,11 @@ namespace SimpleSteps.GuiWpf
                     services.AddScoped<LocationService>();
                     services.AddScoped<RoomService>();
                     services.AddScoped<MeasuredDataService>();
+
+                    //Repository zum DIJ-Container hinzufügen
+                    services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+
 
                     //services.AddTransient<MainWindow>();
 

@@ -24,32 +24,32 @@ namespace SimpleSteps.GuiWpf
 
         public MainWindow(AppUserService appUserService, LocationService locationService, RoomService roomService)
         {
-            InitializeComponent();
-            _appUserService = appUserService;
-            var userList = _appUserService.GetAllUsers();
-            this.grdAppUsers.ItemsSource = userList;
+            //InitializeComponent();
+            //_appUserService = appUserService;
+            //var userList = _appUserService.GetAllUsers();
+            //this.grdAppUsers.ItemsSource = userList;
 
-            _locationService = locationService;
-            var locationList = _locationService.GetAll();
-            this.grdLocations.ItemsSource = locationList;
+            //_locationService = locationService;
+            //var locationList = _locationService.GetAll();
+            //this.grdLocations.ItemsSource = locationList;
 
-            _roomService = roomService;
-            var roomList = _roomService.GetAll();
-            this.grdRooms.ItemsSource = roomList;
+            //_roomService = roomService;
+            //var roomList = _roomService.GetAll();
+            //this.grdRooms.ItemsSource = roomList;
 
-            var firstLocation = locationList.FirstOrDefault();
-            if(firstLocation != null)
-            {
-                this.grdRoomsByLocation.ItemsSource = _roomService.GetAllByLocationId(firstLocation.Id);
-            }
+            //var firstLocation = locationList.FirstOrDefault();
+            //if(firstLocation != null)
+            //{
+            //    this.grdRoomsByLocation.ItemsSource = _roomService.GetAllByLocationId(firstLocation.Id);
+            //}
 
             
         }
 
         private void btnLoadAppUsers_Click(object sender, RoutedEventArgs e)
         {
-            this.grdAppUsers.ItemsSource = null;
-            this.grdAppUsers.ItemsSource = _appUserService.GetAllUsers();
+            //this.grdAppUsers.ItemsSource = null;
+            //this.grdAppUsers.ItemsSource = _appUserService.GetAllUsers();
         }
     }
 }

@@ -18,11 +18,21 @@ namespace SimpleSteps.GuiWpf.Views
     /// </summary>
     public partial class vSimpleSteps : Window
     {
+        private readonly vmSimpleSteps _viewModel;
+
         public vSimpleSteps(vmSimpleSteps viewModel)
         {
             InitializeComponent();
 
-            this.DataContext = viewModel();
+            _viewModel = viewModel;
+            this.DataContext = _viewModel;
+            Loaded += vSimpleSteps_Loaded;
+
+        }
+
+        private async void vSimpleSteps_Loaded(object sender, RoutedEventArgs e)
+        {
+            await _viewModel.LoadAsync();
         }
     }
 }
