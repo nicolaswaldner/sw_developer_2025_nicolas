@@ -39,10 +39,15 @@ namespace SimpleSteps.GuiWpf.ViewModels
         partial void OnSelectedAppUserChanged(AppUser value)
         {
             UpdateAppUserCommand.NotifyCanExecuteChanged();
-            if (value!=null)
+            if (value != null)
             {
-                value.ErrorsChanged += Value.ErrorsChanged;
+                value.ErrorsChanged += Value_ErrorsChanged;
             }
+        }
+
+        private void Value_ErrorsChanged(object? sender, System.ComponentModel.DataErrorsChangedEventArgs e)
+        {
+            UpdateAppUserCommand.NotifyCanExecuteChanged();
         }
 
 
