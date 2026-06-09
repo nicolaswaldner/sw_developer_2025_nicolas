@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SD.Core.Application.Queries;
 using SD.Core.Entities;
 using SD.Persistence.Repositories.DBContext;
 
 namespace SD.Web.Controllers
 {
-    public class MoviesController : Controller
+    public class MoviesController : MediatorBaseController
     {
         private readonly MovieDbContext _context;
 
@@ -20,30 +21,17 @@ namespace SD.Web.Controllers
         }
 
         // GET: Movies
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] GetMovieDtosQuery query, CancellationToken cancellationToken)
         {
-            var movieDbContext = _context.Movies.Include(m => m.Genre).Include(m => m.MediumType);
-            return View(await movieDbContext.ToListAsync());
+            var movieDtos = await base.Mediator.Send(query, cancellationToken);
+            return View(movieDtos);
         }
 
         // GET: Movies/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details([FromRoute] GetMovieDtoQuery query, CancellationToken cancellationToken)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var movie = await _context.Movies
-                .Include(m => m.Genre)
-                .Include(m => m.MediumType)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (movie == null)
-            {
-                return NotFound();
-            }
-
-            return View(movie);
+            var movieDto = await base.Mediator.Send(query, cancellationToken);
+            return View(movieDto);
         }
 
         // GET: Movies/Create
