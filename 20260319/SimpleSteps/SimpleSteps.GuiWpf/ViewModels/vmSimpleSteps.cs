@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ScottPlot.TickGenerators;
+using ScottPlot.WPF;
 using SimpleSteps.Business.Services;
 using SimpleSteps.Model;
 using System;
@@ -24,6 +26,8 @@ namespace SimpleSteps.GuiWpf.ViewModels
 
         [ObservableProperty]
         private List<MeasuredData> measuredData;
+
+        public WpfPlot PlotControl { get; } = new WpfPlot();
 
 
         [ObservableProperty]
@@ -85,6 +89,9 @@ namespace SimpleSteps.GuiWpf.ViewModels
             //appUsers = await _appUserService.GetAllUsersAsync();
             var userList = await _appUserService.GetAllUsersAsync();
             AppUsers = new ObservableCollection<AppUser>(userList.OrderBy(o => o.Displayname));
+
+            //Diagrammdaten laden
+            LoadChart();
         }
 
 
@@ -131,6 +138,13 @@ namespace SimpleSteps.GuiWpf.ViewModels
             }
         }
 
+        //löscht die eingebene suche
+        [RelayCommand]
+        private async Task ClearSearchAppUser()
+        {
+            this.SearchValue = string.Empty;
+        }
+
         private bool CanSearch()
         {
             return !string.IsNullOrWhiteSpace(SearchValue);
@@ -141,5 +155,25 @@ namespace SimpleSteps.GuiWpf.ViewModels
             return SelectedAppUser != null && !SelectedAppUser.HasErrors;
         }
 
+        private void LoadChart()
+        {
+            //Diagramm einrichten 
+            PlotControl.Plot.Clear();
+            PlotControl.Plot.Axes.SetLimitsY(-10, 40);
+            PlotControl.Plot.Axes.Left.TickGenerator = new NumericFixedInterval(5);
+            PlotControl.Plot.Axes.DateTimeTicksBottom();
+            PlotControl.Plot.XLabel("Zeitpunkt");
+            PlotControl.Plot.YLabel("Messwert [°C]");
+
+            //Werte für X und Y Koordinate laden
+            var dataToDisplay = MeasuredData.OrderBy(x => x.MeasuredDateTime).ToList();
+            double[] xs = dataToDisplay.Select(x => x.MeasuredDateTime.ToOADate()).ToArray();
+            double[] ys = dataToDisplay.Select(x => (double)x.MeasuredValue).ToArray();
+
+            //Diagrammtyp festlegen
+            PlotControl.Plot.Add.Scatter(xs, ys);
+            PlotControl.Refresh();
+
+        }
     }
 }

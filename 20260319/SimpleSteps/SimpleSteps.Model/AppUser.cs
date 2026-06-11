@@ -14,15 +14,15 @@ namespace SimpleSteps.Model
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(Displayname))] //damit wird die Anzeige des Displaynames aktualisiert, wenn sich der Name oder der Nachname ändert
         [Required(ErrorMessage = "Vorname ist erforderlich")] //Pflichtfeld für Eingabe
-        [NotifyDataErrorInfo]
         [StringLength(50)]
+        [NotifyDataErrorInfo]
         public string name;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(Displayname))]
-        [NotifyDataErrorInfo]
-        [StringLength(50)]
         [Required(ErrorMessage = "Nachname ist erforderlich")]
+        [StringLength(50)]
+        [NotifyDataErrorInfo]
         public string lastname;
 
         [ObservableProperty]

@@ -32,10 +32,13 @@
                         <ColumnDefinition Width="50*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Row="0" Grid.Column="0" Content="Raumklima"  />
-                    <Label Grid.Row="0" Grid.Column="1" Content="Trinkmenge"  />
+                    <!--<Label Grid.Row="0" Grid.Column="0" Content="Raumklima"  />-->
+                    <ContentControl Grid.Row="0" Grid.Column="0" 
+                                    Grid.RowSpan="2" Grid.ColumnSpan="2" 
+                                    Content="{Binding PlotControl}" />
+                    <!--<Label Grid.Row="0" Grid.Column="1" Content="Trinkmenge"  />
                     <Label Grid.Row="1" Grid.Column="0" Content="Chart Raumklima"  />
-                    <Label Grid.Row="1" Grid.Column="1" Content="Chart Trinkmenge"  />
+                    <Label Grid.Row="1" Grid.Column="1" Content="Chart Trinkmenge"  />-->
                 </Grid>
             </TabItem>
 
@@ -58,7 +61,7 @@
                                                     Width="70"
                                                     Visibility="Collapsed"/>
                             <DataGridTextColumn Header="Zeipunkt"
-                                                    Binding="{Binding MeasuredDateTime, StringFormat={}{0:dd.MM.yyyy HH:mmMss}}"
+                                                    Binding="{Binding MeasuredDateTime, StringFormat={}{0:dd.MM.yyyy HH:mm}}"
                                                     Width="100"
                                                     />
                             <!--<DataGridTextColumn Header="Messwert"
@@ -93,9 +96,9 @@
                 <DockPanel LastChildFill="True">
 
                     <ToolBar DockPanel.Dock="Top">
+                        <Button Content="Löschen" Command="{Binding DeleteAppUserCommand}"/>
                         <Button Content="Neu" Command="{Binding NewAppUserCommand}" />
                         <Button Content="Speichern" Command="{Binding UpdateAppUserCommand}"/>
-                        <Button Content="Löschen" Command="{Binding DeleteAppUserCommand}"/>
                     </ToolBar>
                     <Grid>
                         <Grid.RowDefinitions>
@@ -108,12 +111,13 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="2">
                             <TextBox x:Name="txbSearchValue" 
-                                     MinWidth="120"
-                                     MaxWidth="150"
+                                     MinWidth="115"
+                                     MaxWidth="115"
+                                     Height="27"
                                      Text="{Binding SearchValue, UpdateSourceTrigger=PropertyChanged, Delay=500}" />
-                            <!--<Button x:Name="btnSearch" Content="Suche" Command="{Binding SearchAppUserCommand}" />-->
+                            <Button Width="27" Height="27" x:Name="btnSearchClear" Content="x" Command="{Binding ClearSearchAppUserCommand}" />
                         </StackPanel>
                         <ListBox Grid.Row="1" Grid.Column="0" x:Name="lstAppUsers" 
                                  ItemsSource="{Binding AppUsers}"
@@ -124,10 +128,12 @@
                                  />
 
 
-                        <Label Grid.Row="2" Grid.Column="0" x:Name="lblRecordCount" Content="100" />
+                        
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding AppUsers.Count, StringFormat={}{0} Benutzer}" />
 
-                        <Grid Grid.Row="1" Grid.Column="1">
+                        <Grid Grid.Row="1" Grid.Column="1" Margin="5">
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="35" />
                                 <RowDefinition Height="35" />
                                 <RowDefinition Height="35" />
                                 <RowDefinition Height="35" />
@@ -138,7 +144,7 @@
                                 <RowDefinition Height="35" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="25*" />
+                                <ColumnDefinition Width="25*" MinWidth="100" MaxWidth="130" />
                                 <ColumnDefinition Width="75*" />
                             </Grid.ColumnDefinitions>
                             <Label Grid.Row="0" Grid.Column="0" Content="Name" />
@@ -160,7 +166,13 @@
                             <ComboBox Grid.Row="6" Grid.Column="1"
                                       ItemsSource="{Binding Gender}"
                                       SelectedItem="{Binding SelectedAppUser.Sex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      Width="150" />
+                                      />
+
+                            <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Content="Löschen" Command="{Binding DeleteAppUserCommand}"/>
+                                <Button Content="Neu" Command="{Binding NewAppUserCommand}" />
+                                <Button Content="Speichern" Command="{Binding UpdateAppUserCommand}"/>
+                            </StackPanel>
 
                         </Grid>
 
@@ -184,9 +196,9 @@
         <StatusBar Grid.Row="2" x:Name="staStatusbar">
             <StackPanel Orientation="Horizontal">
                 <Label  Content="Datenstand vom: "/>
-                <Label x:Name="lblLastData" Content="{Binding LastData}"/>
+                <TextBlock Text="{Binding LastData, StringFormat={}{0:dd.MM.yyyy HH:mm}}" VerticalAlignment="Center" />
                 <Label Content="Letzte Aktualisierung: "/>
-                <Label x:Name="lblLastForecast" Content="{Binding LastForecast}"/>
+                <TextBlock Text="{Binding LastForecast, StringFormat={}{0:dd.MM.yyyy HH:mm}}" VerticalAlignment="Center" />
             </StackPanel>
         </StatusBar>
 
