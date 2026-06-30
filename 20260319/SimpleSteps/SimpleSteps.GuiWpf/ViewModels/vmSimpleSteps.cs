@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Options;
 using ScottPlot.TickGenerators;
 using ScottPlot.WPF;
 using SimpleSteps.Business.Services;
@@ -7,15 +8,22 @@ using SimpleSteps.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Runtime.CompilerServices;
 using System.Text;
+using System.Windows.Xps.Packaging;
+using WeatherProvider.Core.Interfaces;
+using WeatherProvider.Core.Options;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace SimpleSteps.GuiWpf.ViewModels
 {
     public partial class vmSimpleSteps : ObservableObject
     {
+
         AppUserService _appUserService;
-        MeasuredDataService _measuredDataService;
+        MeasuredDataService _measurementsDataService;
+        IWeatherProviderFactory _weatherProviderFactory;
+        WeatherSettings _weatherSettings;
+
 
         [ObservableProperty]
         private DateTime lastData;
@@ -24,22 +32,26 @@ namespace SimpleSteps.GuiWpf.ViewModels
         [ObservableProperty]
         private string windowTitle;
 
+
+        [ObservableProperty]
+        private string forecastMessage;
+
+
         [ObservableProperty]
         private List<MeasuredData> measuredData;
 
+
         public WpfPlot PlotControl { get; } = new WpfPlot();
+
 
 
         [ObservableProperty]
         private ObservableCollection<AppUser> appUsers;
 
-
-
         [ObservableProperty]
         private AppUser selectedAppUser;
 
 
-        //wird automatisch aufgerufen, wenn sich der Wert von SelectedAppUser ändert
         partial void OnSelectedAppUserChanged(AppUser value)
         {
             UpdateAppUserCommand.NotifyCanExecuteChanged();
@@ -54,78 +66,101 @@ namespace SimpleSteps.GuiWpf.ViewModels
             UpdateAppUserCommand.NotifyCanExecuteChanged();
         }
 
-
-
-
         [ObservableProperty]
         private string searchValue;
-
         partial void OnSearchValueChanged(string value)
         {
             SearchAppUser();
         }
 
+
         public List<string> Gender { get; set; } = new() { "männlich", "weiblich" };
 
-        public vmSimpleSteps(MeasuredDataService measuredDataService, AppUserService appUserService)
+
+        public vmSimpleSteps(MeasuredDataService measuredDataService, AppUserService appUserService, IWeatherProviderFactory weatherProviderFactory, IOptions<WeatherSettings> weatherSettings)
         {
-            _measuredDataService = measuredDataService;
+            _measurementsDataService = measuredDataService;
             _appUserService = appUserService;
+            _weatherProviderFactory = weatherProviderFactory;
+            _weatherSettings = weatherSettings.Value;
 
             LastData = DateTime.Now;
             LastForecast = DateTime.Now;
             WindowTitle = "SimpleSteps - Dashboard";
 
-            //nicht mehr verwendbar, da im constructor keien asynchrone Methoden ausgeführt werden können
-            //MeasuredData = measuredDataService.GetAll();
-            //appUsers = appUserService.GetAllUsersAsync();
+            //Nicht mehr verwendbar da in Constructor keine asynchronen Methoden ausgeführ werden können
+            //MeasuredData = _measurementsDataService.GetAll();
+            //AppUsers = _appUserService.GetAllUsersAsync();
         }
 
-        //so gehts bzgl. async methode in constructor
+
         public async Task LoadAsync()
         {
-            MeasuredData = _measuredDataService.GetAll();
-            //vor umstellung auf observablecollection
-            //appUsers = await _appUserService.GetAllUsersAsync();
+            MeasuredData = _measurementsDataService.GetAll();
+            //Vor Umstellung auf ObservableCollection
+            //AppUsers = await _appUserService.GetAllUsersAsync();
             var userList = await _appUserService.GetAllUsersAsync();
             AppUsers = new ObservableCollection<AppUser>(userList.OrderBy(o => o.Displayname));
 
             //Diagrammdaten laden
             LoadChart();
+
+            //Wetterdaten laden
+            await LoadWeatherAsync();
+
+        }
+
+
+        private async Task LoadWeatherAsync()
+        {
+
+            var weatherProvider = _weatherProviderFactory.GetProvider();
+            var currentWeather = await weatherProvider.GetCurrentWeatherAsync(_weatherSettings.DefaultLocation.Latitude, _weatherSettings.DefaultLocation.Longitude);
+            var foreCast = await weatherProvider.GetForecastAsync(_weatherSettings.DefaultLocation.Latitude, _weatherSettings.DefaultLocation.Longitude);
+            string houryForecast = string.Empty;
+            foreach (var item in foreCast.HourlyForecasts)
+            {
+                houryForecast = houryForecast + $"{item.ForecastTimeUtc.ToLocalTime()} - {item.TemperatureCelsius}°C, {item.WeatherDescription}\n";
+            }
+            forecastMessage = $"Aktuelle Wettervorhersage für {_weatherSettings.DefaultLocation.Name}:\n{houryForecast} ";
         }
 
 
 
-        //Methoden für die Buttons, für MeasuredData
+
+        //Commands für MeasuredData
         [RelayCommand]
         private void Update()
         {
 
         }
 
-        //für AppUser
+
+        //Commands für AppUser
         [RelayCommand]
         private void NewAppUser()
         {
             SelectedAppUser = _appUserService.New();
             SelectedAppUser.Validate();
+
         }
 
         [RelayCommand(CanExecute = nameof(CanUpdate))]
         private async Task UpdateAppUser()
         {
             _appUserService.Update(SelectedAppUser);
-            var userList = await _appUserService.GetAllUsersAsync();
             AppUsers = new ObservableCollection<AppUser>(AppUsers.OrderBy(o => o.Displayname));
         }
-
         [RelayCommand]
         private void DeleteAppUser()
         {
             _appUserService.Delete(SelectedAppUser);
             AppUsers.Remove(SelectedAppUser);
-            selectedAppUser = null;
+            SelectedAppUser = null;
         }
+
+
+
         [RelayCommand(CanExecute = nameof(CanSearch))]
         private async Task SearchAppUser()
         {
@@ -138,12 +173,19 @@ namespace SimpleSteps.GuiWpf.ViewModels
             }
         }
 
-        //löscht die eingebene suche
         [RelayCommand]
         private async Task ClearSearchAppUser()
         {
             this.SearchValue = string.Empty;
         }
+
+
+        [RelayCommand]
+        private async Task GetForecast()
+        {
+            await LoadWeatherAsync();
+        }
+
 
         private bool CanSearch()
         {
@@ -155,9 +197,12 @@ namespace SimpleSteps.GuiWpf.ViewModels
             return SelectedAppUser != null && !SelectedAppUser.HasErrors;
         }
 
+
+
         private void LoadChart()
         {
-            //Diagramm einrichten 
+
+            //Diagramm einrichten
             PlotControl.Plot.Clear();
             PlotControl.Plot.Axes.SetLimitsY(-10, 40);
             PlotControl.Plot.Axes.Left.TickGenerator = new NumericFixedInterval(5);
@@ -175,5 +220,7 @@ namespace SimpleSteps.GuiWpf.ViewModels
             PlotControl.Refresh();
 
         }
+
     }
+
 }

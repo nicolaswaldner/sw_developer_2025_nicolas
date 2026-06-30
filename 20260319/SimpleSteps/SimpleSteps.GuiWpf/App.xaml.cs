@@ -11,6 +11,7 @@ using SimpleSteps.GuiWpf.Views;
 using System.Configuration;
 using System.Data;
 using System.Windows;
+using WeatherProvider.Core.Extensions;
 
 namespace SimpleSteps.GuiWpf
 {
@@ -45,21 +46,22 @@ namespace SimpleSteps.GuiWpf
                 //})
                 .ConfigureServices((context, services) =>
                 {
-                    services.AddDbContext<AppDbContext>(options =>
-                        options.UseSqlServer(context.Configuration.GetConnectionString("DefaultConnection")));
+                services.AddDbContext<AppDbContext>(options =>
+                    options.UseSqlServer(context.Configuration.GetConnectionString("DefaultConnection")));
 
-                    //services.Configure<AppSettings>(
-                    //    context.Configuration.GetSection("AppSettings"));
+                //services.Configure<AppSettings>(
+                //    context.Configuration.GetSection("AppSettings"));
 
-                    services.AddScoped<AppUserService>();
-                    services.AddScoped<LocationService>();
-                    services.AddScoped<RoomService>();
-                    services.AddScoped<MeasuredDataService>();
+                services.AddScoped<AppUserService>();
+                services.AddScoped<LocationService>();
+                services.AddScoped<RoomService>();
+                services.AddScoped<MeasuredDataService>();
 
-                    //Repository zum DIJ-Container hinzufügen
-                    services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+                //Repository zum DIJ-Container hinzufügen
+                services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
-
+                //Nutzung der Bibliothek WeatherProvider
+                services.AddWeatherProviderServices(context.Configuration);
 
                     //services.AddTransient<MainWindow>();
 

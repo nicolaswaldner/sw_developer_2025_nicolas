@@ -186,6 +186,8 @@
             </TabItem>
             <TabItem Header="Vorhersage" x:Name="taiForecast">
                 <StackPanel>
+                    <Button Content="Wettervorhersage abrufen" Command="{Binding GetForecastCommand}" Width="150" />
+                    <TextBlock Text="{Binding forecastMessage}" />
 
                 </StackPanel>
             </TabItem>
