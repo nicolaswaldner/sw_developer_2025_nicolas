@@ -1,0 +1,15 @@
+{
+  "name": "mvc-clientlibs",
+  "version": "1.0.0",
+  "scripts": {
+    "update-libs": "npm update && node copy-libs.js"
+  },
+  "dependencies": {
+    "bootstrap": "^5.*",
+    "cldr-data": "latest",
+    "cldrjs": "latest",
+    "globalize": "^1.7.0",
+    "jquery": "^3.7.1",
+    "jquery-validation": "^1.22.1"
+  }
+}

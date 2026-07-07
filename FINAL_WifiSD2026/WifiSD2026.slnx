@@ -1,0 +1,25 @@
+<Solution>
+  <Folder Name="/Application/">
+    <Project Path="SD.Application/SD.Application.csproj" Id="06fd10aa-dc5b-4ecd-9197-9779d58aa91f" />
+  </Folder>
+  <Folder Name="/Clients/">
+    <Project Path="SD.Web/SD.Web.csproj" Id="45074e22-131e-4fc7-875a-5ac4b1729f1f" />
+    <Project Path="SD.WS/SD.WS.csproj" Id="1a1d4f4e-ec86-4b22-83b2-136adefb9b29" />
+  </Folder>
+  <Folder Name="/Clients/Docs/">
+    <File Path="PPT_WebDeveloper_Architekturen.pdf" />
+    <File Path="PPT_WebDeveloper_Schnittstellen.pdf" />
+    <File Path="Stundenplan 80800.pdf" />
+    <File Path="TextFile1.txt" />
+  </Folder>
+  <Folder Name="/Common/">
+    <Project Path="SD.Common/SD.Common.csproj" Id="9e285025-3934-43a8-8634-1865802bb12b" />
+    <Project Path="SD.Resources/SD.Resources.csproj" Id="83e1ac99-bea5-4818-8668-5e5314775e6d" />
+  </Folder>
+  <Folder Name="/Core/">
+    <Project Path="SD.Core/SD.Core.csproj" />
+  </Folder>
+  <Folder Name="/Persistence/">
+    <Project Path="SD.Persistence/SD.Persistence.csproj" Id="384f8a32-8984-4b45-8f95-616e37324e6e" />
+  </Folder>
+</Solution>
