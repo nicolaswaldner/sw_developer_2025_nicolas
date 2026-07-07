@@ -51,6 +51,8 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 
 });
 
+//Auto compile of Razor pages in development mode
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
 /* DBContext registrieren */
 var movieDbConnectionString = builder.Configuration.GetConnectionString("MovieDbContext");

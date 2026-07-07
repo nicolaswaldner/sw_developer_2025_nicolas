@@ -169,9 +169,15 @@ namespace SD.Web.Controllers
             }
             var genreSelectList = new SelectList(genres, nameof(Genre.Id), nameof(Genre.Name), genreId);
 
+            var mediumTypeCodes = await this.applicationCacheService.RetrieveFromCacheAsync(nameof(MediumType),
+                                                                                      async() => await base.Mediator.Send(new GetMediumTypesQuery(), cancellationToken), TimeSpan.FromMinutes(5));
 
-            var mediumTypeCodes = await base.Mediator.Send(new GetMediumTypesQuery(), cancellationToken);
+
+            //var mediumTypeCodes = await base.Mediator.Send(new GetMediumTypesQuery(), cancellationToken);
             var mediumTypeCodeList = new SelectList(mediumTypeCodes, nameof(MediumType.Code), nameof(MediumType.Name), mediumTypeCode);
+
+            var ratingDescriptors = this.applicationCacheService.RetrieveFromCache(nameof(Ratings),
+                () => RatingsDescriptor.All.Select(s => new { Rating = (int)s.Enum, RatingName = s.ToString() }).ToList());
 
             var ratingDesciptors = RatingsDescriptor.All.Select(s => new { Rating = (int)s.Enum, RatingName = s.ToString() }).ToList();
             var ratingsList = new SelectList(ratingDesciptors, "Rating", "RatingName", (int)ratings);
