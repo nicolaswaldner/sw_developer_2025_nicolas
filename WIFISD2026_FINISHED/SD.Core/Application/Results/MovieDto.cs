@@ -1,0 +1,35 @@
+﻿using SD.Core.Entities;
+using SD.Core.EnumDescriptors;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace SD.Core.Application.Results
+{
+    public class MovieDto : MovieBase
+    {
+        public string? GenreName { get; set; }
+        public string? MediumTypeName { get; set; }
+
+        public string? LocalizedRating { get; set; }
+
+
+        public static MovieDto MapFrom(Movie movie)
+        {
+            return new MovieDto
+            {
+                Id = movie.Id,
+                Title = movie.Title,
+                GenreId = movie.GenreId,
+                GenreName = movie.Genre?.Name ?? string.Empty,
+                MediumTypeCode = movie.MediumTypeCode,               
+                MediumTypeName = movie.MediumType?.Name ?? string.Empty,
+                ReleaseDate = movie.ReleaseDate,
+                Price = movie.Price,
+                Rating = movie.Rating,
+                LocalizedRating = RatingsDescriptor.FromEnum(movie.Rating).ToString()
+
+            };
+        }
+    }
+}

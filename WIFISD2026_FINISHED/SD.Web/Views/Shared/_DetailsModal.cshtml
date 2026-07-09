@@ -1,0 +1,31 @@
+﻿<div class="modal fade" id="@ViewBag.ModalId" tabindex="-1" role="dialog" aria-labelledby="DeleteLabel" aria-hidden="true">
+	<span id="DeleteTitle" class="invisible">@BasicRes.DeleteMessage</span>
+	<span id="DetailsTitle" class="invisible">@BasicRes.Details</span>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h6 class="modal-title" id="DetailsModalTitle"></h6>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<dl id="DetailsModalBody" class="row">
+					<!-- Hier werden dynamisch die Werteparte hinzugefügt! -->
+				</dl>
+
+			</div>
+			<div class="modal-footer">
+				<div id="DetailsModalControls">
+					<form asp-action="@ViewData["Action"]" asp-controller="@ViewData["Controller"]" method="post">
+
+						<input type="hidden" id="DetailsModalId" name="Id" />
+						<input type="submit" value="@BasicRes.Delete" id="DeleteButton" class="btn btn-secondary" />
+
+						@Html.AntiForgeryToken()
+					</form>
+				</div>
+				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">@BasicRes.Cancel</button>
+			</div>
+		</div>
+
+	</div>
+</div>

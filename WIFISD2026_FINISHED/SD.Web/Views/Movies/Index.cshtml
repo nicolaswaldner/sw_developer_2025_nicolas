@@ -1,0 +1,75 @@
+@model IEnumerable<MovieDto>
+
+@{
+    ViewData["Title"] = "Movies";
+    ViewBag.LocaleName = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
+}
+
+<h1>Index</h1>
+<p>
+    <form method="post" action="/Movies/Create">
+        @Html.AntiForgeryToken()
+
+        <input class="btn btn-sm btn-dark" type="submit" value="@BasicRes.New" />
+    </form>
+</p>
+<table id="MovieTable" class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th>@BasicRes.Genre</th>
+            <th>@BasicRes.MediumType</th>
+            <th>@Html.DisplayNameFor(model => model.Title)</th>
+            <th>@Html.DisplayNameFor(model => model.Price)</th>
+            <th>@Html.DisplayNameFor(model => model.ReleaseDate)</th>
+            <th>@Html.DisplayNameFor(model => model.Rating)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GenreName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MediumTypeCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReleaseDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LocalizedRating)
+                </td>
+                <td>
+                    @*<a href="/Movies/Edit/@item.Id" class="btn btn-sm btn-warning" data-id="@item.Id" data-name="Edit" title="@BasicRes.Edit"><i class="fa-solid fa-pen"></i></a> |*@
+                    @*<a asp-action="Edit" asp-route-id="@item.Id">@BasicRes.Edit</a> |*@
+                    @*<a asp-action="Details" asp-route-id="@item.Id">@BasicRes.Details</a> |
+                  <a asp-action="Delete" asp-route-id="@item.Id">@BasicRes.Delete</a>
+                *@
+                    <a href="/Movies/Edit/@item.Id" class="btn btn-sm btn-warning" data-id="@item.Id" data-name="Edit"><i title="@BasicRes.Edit" class="fa-regular fa-pen-to-square"></i></a> |
+                    <a href="/Movies/Details/@item.Id" class="btn btn-sm btn-info" data-name="Details"><i title="@BasicRes.Details" class="fa fa-list"></i></a> |
+                    <a href="/Movies/Delete/@item.Id" class="btn btn-sm btn-danger" data-name="Delete" data-id="@item.Id"><i title="@BasicRes.Delete" class="fa-solid fa-rectangle-xmark"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal Dialog -->
+@(await Html.PartialAsync("_DetailsModal", new ViewDataDictionary(ViewData) { { "ModalId", "MovieDetailsModal" }, { "Action", "Delete" }, { "Controller", "Movies" } }))
+
+<div id="EditMoviePartialView"></div>
+
+@section Scripts {
+    <script src="~/js/application/movieindex.js"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
